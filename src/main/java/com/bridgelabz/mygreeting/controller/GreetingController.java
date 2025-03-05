@@ -1,5 +1,6 @@
 package com.bridgelabz.mygreeting.controller;
 
+import com.bridgelabz.mygreeting.model.Greeting;
 import com.bridgelabz.mygreeting.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,17 +14,9 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
-    // GET request with optional firstName and lastName query parameters
-    @GetMapping
-    public String getGreeting(
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName) {
-        return greetingService.getPersonalizedGreeting(firstName, lastName);
-    }
-
-    // POST request remains unchanged
+    // POST request to save a greeting
     @PostMapping
-    public String postGreeting() {
-        return "Greeting created successfully!";
+    public Greeting createGreeting(@RequestParam String message) {
+        return greetingService.saveGreeting(message);
     }
 }
