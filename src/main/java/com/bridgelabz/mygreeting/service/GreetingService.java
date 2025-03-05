@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import java.util.Optional;
+
 @Service
 public class GreetingService {
 
@@ -28,5 +30,16 @@ public class GreetingService {
     // Get all greetings
     public List<Greeting> getAllGreetings() {
         return greetingRepository.findAll();
+    }
+
+    // Update a greeting message
+    public Greeting updateGreeting(Long id, String newMessage) {
+        Optional<Greeting> optionalGreeting = greetingRepository.findById(id);
+        if (optionalGreeting.isPresent()) {
+            Greeting greeting = optionalGreeting.get();
+            greeting.setMessage(newMessage);
+            return greetingRepository.save(greeting);
+        }
+        return null; // Return null if ID is not found
     }
 }
