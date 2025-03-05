@@ -2,6 +2,7 @@ package com.bridgelabz.mygreeting.controller;
 
 import com.bridgelabz.mygreeting.model.Greeting;
 import com.bridgelabz.mygreeting.service.GreetingService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,5 +39,16 @@ public class GreetingController {
     @PutMapping("/{id}")
     public Greeting updateGreeting(@PathVariable Long id, @RequestParam String newMessage) {
         return greetingService.updateGreeting(id, newMessage);
+    }
+
+    // Delete a greeting message
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteGreeting(@PathVariable Long id) {
+        boolean deleted = greetingService.deleteGreeting(id);
+        if (deleted) {
+            return ResponseEntity.ok("Greeting deleted successfully.");
+        } else {
+            return ResponseEntity.status(404).body("Greeting not found.");
+        }
     }
 }

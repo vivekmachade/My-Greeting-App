@@ -42,4 +42,13 @@ public class GreetingService {
         }
         return null; // Return null if ID is not found
     }
+
+    // Delete a greeting message by ID
+    public boolean deleteGreeting(Long id) {
+        if (greetingRepository.existsById(id)) {
+            greetingRepository.deleteById(id);
+            return true;
+        }
+        return false; // Return false if ID does not exist
+    }
 }
